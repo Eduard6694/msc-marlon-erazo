@@ -27,15 +27,21 @@ Route::get('/dashboard', function () {
 // Rutas específicas para Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/citas', [AdminController::class, 'manageAppointments'])->name('admin.appointments');
+    Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.list.appointments');
+    Route::post('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
 });
+
 
 // Rutas específicas para User
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/citas', [UserController::class, 'index'])->name('user.dashboard');
     Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
     Route::get('/user/citas/listar', [UserController::class, 'listAppointments'])->name('user.list.appointments');
+    Route::get('/user/patient/form', [UserController::class, 'showPatientForm'])->name('user.patient.form');
+    Route::post('/user/patient/save', [UserController::class, 'savePatient'])->name('user.save.patient');
 });
+
+
 
 // Rutas de perfil
 Route::middleware('auth')->group(function () {
