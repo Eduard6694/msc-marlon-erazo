@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
+
 Route::get('/', function () {
     return view('index');
 });
@@ -13,20 +14,30 @@ Route::get('/welcome', function () {
 })->name('welcome');
 
 
+// Redirigir al dashboard correspondiente según el rol del usuario
 Route::get('/dashboard', function () {
+    if (auth()->user()->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    } elseif (auth()->user()->hasRole('user')) {
+        return redirect()->route('user.dashboard');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-// Rutas para usuarios con rol de "Admin"
-Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard'); // Dashboard de Admin
-    Route::get('/admin/citas', [AdminController::class, 'manageAppointments'])->name('admin.appointments'); // Gestión de citas
-});
-// Rutas para usuarios con rol de "User"
-Route::middleware(['auth', 'role:User'])->group(function () {
-    Route::get('/user', [UserController::class, 'index'])->name('user.dashboard'); // Dashboard de User
-    Route::get('/user/citas', [UserController::class, 'createAppointment'])->name('user.create.appointment'); // Agendar una cita
+
+// Rutas específicas para Admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/citas', [AdminController::class, 'manageAppointments'])->name('admin.appointments');
 });
 
+// Rutas específicas para User
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/citas', [UserController::class, 'index'])->name('user.dashboard');
+    Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
+    Route::get('/user/citas/listar', [UserController::class, 'listAppointments'])->name('user.list.appointments');
+});
+
+// Rutas de perfil
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
