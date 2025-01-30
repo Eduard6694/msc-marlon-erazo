@@ -60,12 +60,13 @@ class VerifyEmail extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     protected function buildMailMessage($url)
-    {
-        return (new MailMessage)
-            ->subject(Lang::get('Verify Email Address'))
-            ->line(Lang::get('Please click the button below to verify your email address.'))
-            ->action(Lang::get('Verify Email Address'), $url)
-            ->line(Lang::get('If you did not create an account, no further action is required.'));
+{
+    return (new MailMessage)
+        ->subject(Lang::get('Verificación de Correo Electrónico'))
+        ->greeting(Lang::get('¡Hola!'))
+        ->line(Lang::get('Gracias por registrarte en ' . config('app.name') . '. Para completar tu registro, por favor verifica tu correo electrónico haciendo clic en el botón de abajo.'))
+        ->action(Lang::get('Verificar Correo'), $url)
+        ->line(Lang::get('Si no creaste esta cuenta, puedes ignorar este mensaje.'));
     }
 
     /**

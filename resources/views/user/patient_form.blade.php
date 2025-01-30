@@ -66,7 +66,7 @@
                         <!-- Botón para guardar -->
                         <div>
                             <button type="submit" 
-                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">
+                            class="px-4 py-2 bg-indigo-600 text-black rounded-md hover:bg-indigo-700 focus:outline-none">
                                 Guardar Paciente
                             </button>
                         </div>

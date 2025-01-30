@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 26/01/2025 11:17:11
+ Date: 30/01/2025 16:55:40
 */
 
 SET NAMES utf8mb4;
@@ -28,17 +28,19 @@ CREATE TABLE `appointments`  (
   `time` time NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `appointments_user_id_foreign`(`user_id` ASC) USING BTREE,
   CONSTRAINT `appointments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of appointments
 -- ----------------------------
-INSERT INTO `appointments` VALUES (1, 23, '2025-01-27', '13:00:00', '2025-01-26 15:50:59', '2025-01-26 15:50:59');
-INSERT INTO `appointments` VALUES (2, 23, '2025-01-28', '18:00:00', '2025-01-26 15:53:10', '2025-01-26 15:53:10');
-INSERT INTO `appointments` VALUES (3, 23, '2025-01-28', '14:00:00', '2025-01-26 16:12:57', '2025-01-26 16:12:57');
+INSERT INTO `appointments` VALUES (1, 23, '2025-01-27', '13:00:00', '2025-01-26 15:50:59', '2025-01-26 15:50:59', 'pending');
+INSERT INTO `appointments` VALUES (2, 23, '2025-01-28', '18:00:00', '2025-01-26 15:53:10', '2025-01-26 15:53:10', 'pending');
+INSERT INTO `appointments` VALUES (3, 23, '2025-01-28', '14:00:00', '2025-01-26 16:12:57', '2025-01-26 16:12:57', 'pending');
+INSERT INTO `appointments` VALUES (4, 23, '2025-01-29', '14:00:00', '2025-01-29 01:46:10', '2025-01-29 01:46:10', 'pending');
 
 -- ----------------------------
 -- Table structure for cache
@@ -49,7 +51,7 @@ CREATE TABLE `cache`  (
   `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cache
@@ -64,7 +66,7 @@ CREATE TABLE `cache_locks`  (
   `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cache_locks
@@ -84,7 +86,7 @@ CREATE TABLE `failed_jobs`  (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of failed_jobs
@@ -106,7 +108,7 @@ CREATE TABLE `job_batches`  (
   `created_at` int NOT NULL,
   `finished_at` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_batches
@@ -126,7 +128,7 @@ CREATE TABLE `jobs`  (
   `created_at` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `jobs_queue_index`(`queue` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jobs
@@ -141,7 +143,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -154,6 +156,8 @@ INSERT INTO `migrations` VALUES (5, '2025_01_24_220609_add_role_to_users_table',
 INSERT INTO `migrations` VALUES (6, '2025_01_24_235212_create_roles_and_user_roles_tables', 4);
 INSERT INTO `migrations` VALUES (7, '2025_01_26_134749_create_permission_tables', 5);
 INSERT INTO `migrations` VALUES (8, '2025_01_26_154012_create_appointments_table', 6);
+INSERT INTO `migrations` VALUES (9, '2025_01_26_181347_add_status_to_appointments_table', 7);
+INSERT INTO `migrations` VALUES (10, '2025_01_26_182739_create_patients_table', 7);
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -166,7 +170,7 @@ CREATE TABLE `model_has_permissions`  (
   PRIMARY KEY (`permission_id`, `model_id`, `model_type`) USING BTREE,
   INDEX `model_has_permissions_model_id_model_type_index`(`model_id` ASC, `model_type` ASC) USING BTREE,
   CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of model_has_permissions
@@ -183,11 +187,12 @@ CREATE TABLE `model_has_roles`  (
   PRIMARY KEY (`role_id`, `model_id`, `model_type`) USING BTREE,
   INDEX `model_has_roles_model_id_model_type_index`(`model_id` ASC, `model_type` ASC) USING BTREE,
   CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of model_has_roles
 -- ----------------------------
+INSERT INTO `model_has_roles` VALUES (2, 'App\\Models\\User', 26);
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -198,10 +203,32 @@ CREATE TABLE `password_reset_tokens`  (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of password_reset_tokens
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for patients
+-- ----------------------------
+DROP TABLE IF EXISTS `patients`;
+CREATE TABLE `patients`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombres` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `detalles` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `patients_cedula_unique`(`cedula` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of patients
 -- ----------------------------
 
 -- ----------------------------
@@ -216,7 +243,7 @@ CREATE TABLE `permissions`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `permissions_name_guard_name_unique`(`name` ASC, `guard_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of permissions
@@ -235,7 +262,7 @@ CREATE TABLE `role_has_permissions`  (
   INDEX `role_has_permissions_role_id_foreign`(`role_id` ASC) USING BTREE,
   CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of role_has_permissions
@@ -253,7 +280,7 @@ CREATE TABLE `roles`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `roles_name_guard_name_unique`(`name` ASC, `guard_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
@@ -275,12 +302,12 @@ CREATE TABLE `sessions`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sessions_user_id_index`(`user_id` ASC) USING BTREE,
   INDEX `sessions_last_activity_index`(`last_activity` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('WxNMYBrfIKBiNE64TsNhEEdqj2EPdrk87ODZCOL7', 23, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibjdtSDlreWs4TUxZZ2ROTnJ6bEg1WEttR1c5VFQzTm5aNVh2MVVJbyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTEzOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvdXNlci9jaXRhcy9saXN0YXI/ZW5kPTIwMjUtMDItMDJUMDAlM0EwMCUzQTAwLTA1JTNBMDAmc3RhcnQ9MjAyNS0wMS0yNlQwMCUzQTAwJTNBMDAtMDUlM0EwMCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjIzO30=', 1737907994);
+INSERT INTO `sessions` VALUES ('9k7uyAkKL30vWhWqH6TldompCqwXHtYFC38bPQgq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicEJqUktDdzJOblZLRkZKdnhDeXVNOVQySXdNbGw2b1Fla25CYkkydyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fX0=', 1738199754);
 
 -- ----------------------------
 -- Table structure for users
@@ -298,14 +325,15 @@ CREATE TABLE `users`  (
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (21, 'Usuario Prueba', 'usuario@prueba.com', NULL, '$2y$12$ETDScTyUUWComxoaQEALfea3Ip6NomObH7jQZq1priAfnp6qgSuwe', NULL, '2025-01-24 21:53:52', '2025-01-24 21:53:52', 'user');
-INSERT INTO `users` VALUES (22, 'Admin User', 'admin@example.com', NULL, '$2y$12$8MP.m/muCof1vkJDFMmeNuCYaEFUDqhHZ0Ycqrzkhb7oXi2DIcLky', NULL, '2025-01-24 22:07:26', '2025-01-25 00:48:37', 'admin');
-INSERT INTO `users` VALUES (23, 'Regular User', 'user@example.com', NULL, '$2y$12$oYdsyuAAgMcDO/ahQJXSbeuEyowVzQ2C7k0nur0SAtNT7xFsk.HpC', NULL, '2025-01-24 22:07:27', '2025-01-25 00:49:30', 'user');
+INSERT INTO `users` VALUES (22, 'Administrador', 'admin@example.com', NULL, '$2y$12$8MP.m/muCof1vkJDFMmeNuCYaEFUDqhHZ0Ycqrzkhb7oXi2DIcLky', NULL, '2025-01-24 22:07:26', '2025-01-29 00:55:29', 'admin');
+INSERT INTO `users` VALUES (23, 'Usuario Regular', 'user@example.com', NULL, '$2y$12$oYdsyuAAgMcDO/ahQJXSbeuEyowVzQ2C7k0nur0SAtNT7xFsk.HpC', NULL, '2025-01-24 22:07:27', '2025-01-29 01:33:30', 'user');
 INSERT INTO `users` VALUES (24, 'Test User', 'test@example.com', '2025-01-24 22:39:03', '$2y$12$CveT45tX4AKSQSy48/.57ucZIe5edVIvsSZH88FNcKZRNsTpPMcpy', '7wbAHyHJg2', '2025-01-24 22:39:03', '2025-01-24 22:39:03', 'user');
+INSERT INTO `users` VALUES (26, 'Eduardo Ponce', 'alexander.ponce94@hotmail.com', '2025-01-29 23:43:45', '$2y$12$GPiXah0ZMKQ6LJxoEn9/7uPJBaMSQx/QXrBIZ69kxQaNxje34l5T6', NULL, '2025-01-29 23:40:29', '2025-01-29 23:43:45', 'user');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
 
 
 Route::get('/', function () {
@@ -13,6 +14,7 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::post('/contact', [ContactController::class, 'sendMessage'])->name('contact.send');
 
 // Redirigir al dashboard correspondiente según el rol del usuario
 Route::get('/dashboard', function () {
@@ -24,21 +26,22 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Rutas específicas para Admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.list.appointments');
-    Route::post('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
-});
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Rutas de usuario después de la verificación
+    Route::middleware(['role:user'])->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
+        Route::get('/user/citas', [UserController::class, 'listAppointments'])->name('user.list.appointments');
+        Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
+        Route::get('/user/patient/form', [UserController::class, 'showPatientForm'])->name('user.patient.form');
+        Route::post('/user/patient/save', [UserController::class, 'savePatient'])->name('user.save.patient');
+    });
 
-
-// Rutas específicas para User
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/citas', [UserController::class, 'index'])->name('user.dashboard');
-    Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
-    Route::get('/user/citas/listar', [UserController::class, 'listAppointments'])->name('user.list.appointments');
-    Route::get('/user/patient/form', [UserController::class, 'showPatientForm'])->name('user.patient.form');
-    Route::post('/user/patient/save', [UserController::class, 'savePatient'])->name('user.save.patient');
+    // Rutas de admin después de la verificación
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.list.appointments');
+        Route::post('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
+    });
 });
 
 
