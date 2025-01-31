@@ -152,7 +152,7 @@
 
           <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
             <img src="assets/img/about.jpg" class="img-fluid" alt="Sobre nosotros">
-            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+            <a href="https://youtu.be/87AUIFzcGU4?si=E4H-zqgAN5n9EkT0" class="glightbox pulsating-play-btn"></a>
           </div>
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
@@ -192,50 +192,6 @@
     </section><!-- /About Section -->
 
 
-    <!-- Stats Section -->
-    <section id="stats" class="stats section light-background">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="fa-solid fa-user-doctor"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Doctors</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="fa-regular fa-hospital"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Departments</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="fas fa-flask"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Research Labs</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="fas fa-award"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Awards</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Stats Section -->
 
     <!-- Services Section -->
     <section id="services" class="services section">
@@ -531,21 +487,17 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
-
       <div class="container">
-
         <div class="row align-items-center">
-
           <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
-            <h3>Testimonials</h3>
+            <h3>Testimonios</h3>
             <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+              Escucha lo que dicen nuestros pacientes y sus familias sobre nuestro apoyo psicopedagógico.
+              Nos comprometemos a brindar estrategias personalizadas para el desarrollo educativo y emocional.
             </p>
           </div>
 
           <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
-
             <div class="swiper init-swiper">
               <script type="application/json" class="swiper-config">
                 {
@@ -564,117 +516,83 @@
               </script>
               <div class="swiper-wrapper">
 
+                <!-- Testimonio 1 -->
                 <div class="swiper-slide">
                   <div class="testimonial-item">
                     <div class="d-flex">
-                      <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img flex-shrink-0" alt="Testimonio 1">
                       <div>
-                        <h3>Saul Goodman</h3>
-                        <h4>Ceo &amp; Founder</h4>
+                        <h3>María Rodríguez</h3>
+                        <h4>Madre de un paciente</h4>
                         <div class="stars">
-                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
                         </div>
                       </div>
                     </div>
                     <p>
                       <i class="bi bi-quote quote-icon-left"></i>
-                      <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
+                      <span>Gracias al equipo psicopedagógico, mi hijo ha mejorado su concentración y confianza en la escuela. El apoyo ha sido increíble.</span>
                       <i class="bi bi-quote quote-icon-right"></i>
                     </p>
                   </div>
-                </div><!-- End testimonial item -->
+                </div><!-- Fin Testimonio 1 -->
 
+                <!-- Testimonio 2 -->
                 <div class="swiper-slide">
                   <div class="testimonial-item">
                     <div class="d-flex">
-                      <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img flex-shrink-0" alt="Testimonio 2">
                       <div>
-                        <h3>Sara Wilsson</h3>
-                        <h4>Designer</h4>
+                        <h3>Carlos Fernández</h3>
+                        <h4>Docente</h4>
                         <div class="stars">
-                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
                         </div>
                       </div>
                     </div>
                     <p>
                       <i class="bi bi-quote quote-icon-left"></i>
-                      <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                      <span>Las estrategias de enseñanza personalizadas han sido clave para mejorar el desempeño de mis estudiantes con dificultades de aprendizaje.</span>
                       <i class="bi bi-quote quote-icon-right"></i>
                     </p>
                   </div>
-                </div><!-- End testimonial item -->
+                </div><!-- Fin Testimonio 2 -->
 
+                <!-- Testimonio 3 -->
                 <div class="swiper-slide">
                   <div class="testimonial-item">
                     <div class="d-flex">
-                      <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img flex-shrink-0" alt="Testimonio 3">
                       <div>
-                        <h3>Jena Karlis</h3>
-                        <h4>Store Owner</h4>
+                        <h3>Lucía Pérez</h3>
+                        <h4>Estudiante</h4>
                         <div class="stars">
-                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
                         </div>
                       </div>
                     </div>
                     <p>
                       <i class="bi bi-quote quote-icon-left"></i>
-                      <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
+                      <span>Con la ayuda del equipo psicopedagógico, aprendí nuevas técnicas de estudio y mejoré mi confianza en matemáticas.</span>
                       <i class="bi bi-quote quote-icon-right"></i>
                     </p>
                   </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                  <div class="testimonial-item">
-                    <div class="d-flex">
-                      <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img flex-shrink-0" alt="">
-                      <div>
-                        <h3>Matt Brandon</h3>
-                        <h4>Freelancer</h4>
-                        <div class="stars">
-                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <p>
-                      <i class="bi bi-quote quote-icon-left"></i>
-                      <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
-                      <i class="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                  <div class="testimonial-item">
-                    <div class="d-flex">
-                      <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img flex-shrink-0" alt="">
-                      <div>
-                        <h3>John Larson</h3>
-                        <h4>Entrepreneur</h4>
-                        <div class="stars">
-                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <p>
-                      <i class="bi bi-quote quote-icon-left"></i>
-                      <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
-                      <i class="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div><!-- End testimonial item -->
+                </div><!-- Fin Testimonio 3 -->
 
               </div>
               <div class="swiper-pagination"></div>
             </div>
-
           </div>
-
         </div>
-
       </div>
+    </section><!-- Fin Sección de Testimonios -->
 
-    </section><!-- /Testimonials Section -->
 
     <!-- Gallery Section -->
     <section id="gallery" class="gallery section">
@@ -765,7 +683,8 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Contacto</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Estamos aquí para ayudarte. Si tienes preguntas o necesitas más información sobre nuestros servicios psicopedagógicos, no dudes en comunicarte con nosotros.</p>
+
       </div><!-- End Section Title -->
 
       <div class="mb-5" data-aos="fade-up" data-aos-delay="200">

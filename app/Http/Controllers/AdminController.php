@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Mail\AppointmentApprovedUser;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Patient;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +17,7 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    // Listar las citas para el calendario
+    // Listar las citas para el calendario en FullCalendar
     public function listAppointments()
     {
         $appointments = Appointment::all();
@@ -22,16 +26,16 @@ class AdminController extends Controller
         $events = $appointments->map(function ($appointment) {
             return [
                 'id' => $appointment->id,
-                'title' => $appointment->status === 'pending' ? 'Pendiente' : 'Autorizada',
+                'title' => $appointment->status === 'pendiente' ? 'Pendiente' : 'Autorizada',
                 'start' => $appointment->date . 'T' . $appointment->time,
-                'color' => $appointment->status === 'pending' ? 'orange' : 'green',
+                'color' => $appointment->status === 'pendiente' ? 'orange' : 'green',
             ];
         });
 
         return response()->json($events);
     }
 
-    // Autorizar una cita
+    // Autorizar una cita y notificar al usuario
     public function authorizeAppointment($id)
     {
         $appointment = Appointment::find($id);
@@ -40,9 +44,21 @@ class AdminController extends Controller
             return response()->json(['error' => 'Cita no encontrada.'], 404);
         }
 
-        $appointment->status = 'authorized'; // Cambiar el estado a "autorizada"
+        if ($appointment->status === 'autorizada') {
+            return response()->json(['message' => 'Esta cita ya ha sido autorizada.']);
+        }
+
+        $appointment->status = 'autorizada'; // Cambiar el estado a "autorizada"
         $appointment->save();
 
-        return response()->json(['success' => 'Cita autorizada correctamente.']);
+        // Enviar correo de notificación al usuario
+        Mail::to($appointment->user->email)->send(new AppointmentApprovedUser($appointment));
+
+        return response()->json(['success' => 'Cita autorizada correctamente y usuario notificado.']);
+    }
+    public function listPatients()
+    {
+        $patients = Patient::all();
+        return view('admin.patients', compact('patients'));
     }
 }

@@ -10,11 +10,11 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cedula',
-        'nombres',
-        'direccion',
-        'fecha_nacimiento',
-        'telefono',
-        'detalles',
+        'user_id', 'cedula', 'nombres', 'direccion', 'fecha_nacimiento', 'telefono', 'detalles'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

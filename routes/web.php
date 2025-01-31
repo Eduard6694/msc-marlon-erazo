@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
+
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
@@ -27,24 +27,24 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Rutas de usuario después de la verificación
+    // Rutas de usuario
     Route::middleware(['role:user'])->group(function () {
         Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
-        Route::get('/user/citas', [UserController::class, 'listAppointments'])->name('user.list.appointments');
+        Route::get('/user/citas/listar', [UserController::class, 'listAppointments'])->name('user.list.appointments'); // Ruta corregida
         Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
         Route::get('/user/patient/form', [UserController::class, 'showPatientForm'])->name('user.patient.form');
-        Route::post('/user/patient/save', [UserController::class, 'savePatient'])->name('user.save.patient');
+        Route::post('/user/patient/save', [UserController::class, 'saveOrUpdatePatient'])->name('user.save.patient');
     });
 
-    // Rutas de admin después de la verificación
+    // Rutas de administrador
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-        Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.list.appointments');
-        Route::post('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
+        Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.listAppointments');
+        Route::patch('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
+        Route::get('/admin/pacientes', [AdminController::class, 'listPatients'])->name('admin.list.patients');
+
     });
 });
-
-
 
 // Rutas de perfil
 Route::middleware('auth')->group(function () {

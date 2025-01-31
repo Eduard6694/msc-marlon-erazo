@@ -1,102 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios Psicopedagógicos</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        header {
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
-            color: white;
-            padding: 20px 0;
-        }
-        header h1 {
-            font-weight: 600;
-        }
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .cta-btn {
-            background-color: #6a11cb;
-            color: white;
-            font-weight: 600;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: background-color 0.3s;
-        }
-        .cta-btn:hover {
-            background-color: #2575fc;
-        }
-        footer {
-            background-color: #6a11cb;
-            color: white;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sistema Psicopedagógico - Msc. Marlon Erazo</title>
+    <meta name="description" content="Servicios psicopedagógicos especializados para el desarrollo educativo y personal.">
+    <meta name="keywords" content="psicopedagogía, educación, evaluación psicométrica, asesoría educativa">
+
+    <!-- Favicons -->
+    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 </head>
+
 <body>
-    <header class="text-center">
-        <div class="container">
-            <h1 class="h3">Servicios Psicopedagógicos</h1>
-            <nav class="mt-3">
-                <a href="{{ route('login') }}" class="btn btn-light btn-sm me-2">Iniciar Sesión</a>
-                <a href="{{ route('register') }}" class="btn btn-light btn-sm">Registrarse</a>
-            </nav>
+
+    <!-- Header con botón de regreso -->
+    <header class="text-center py-4 bg-light shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="{{ route('index') }}" class="btn btn-outline-secondary">← Regresar a Inicio</a>
+            <h1 class="h3 text-primary mx-auto">Servicios Psicopedagógicos</h1>
         </div>
     </header>
 
+    <!-- Bienvenida con Botones de Acceso -->
     <main class="container py-5">
-        <section class="text-center mb-5">
-            <h2 class="h4">Bienvenidos a los Servicios Psicopedagógicos de Msc. Marlon Erazo</h2>
-            <p class="mt-3">Apoyamos el desarrollo educativo y personal a través de estrategias personalizadas y profesionales.</p>
-        </section>
-
         <section class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">Evaluaciones Psicopedagógicas</h5>
-                        <p class="card-text">Identificación de necesidades educativas específicas mediante informes detallados.</p>
-                    </div>
+            <div class="col-lg-8 details order-2 order-lg-1">
+                <h3 class="text-primary">Accede a Tu Cuenta</h3>
+                <p class="fst-italic">Para gestionar citas y acceder a nuestros servicios, por favor inicia sesión o regístrate.</p>
+                <p>Si aún no tienes una cuenta, puedes registrarte en pocos pasos y comenzar a aprovechar nuestros servicios psicopedagógicos.</p>
+
+                <!-- Nueva información agregada -->
+                <ul class="mt-3">
+                    <li>Agendar y gestionar tus citas fácilmente.</li>
+                    <li>Acceder a informes y evaluaciones psicopedagógicas.</li>
+                    <li>Recibir asesoría personalizada y seguimiento académico.</li>
+                </ul>
+
+                <div class="mt-4">
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-3">Iniciar Sesión</a>
+                    <a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg">Registrarse</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">Asesoría y Talleres</h5>
-                        <p class="card-text">Capacitación a padres, docentes y autoridades en estrategias de apoyo educativo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">Adaptaciones Curriculares</h5>
-                        <p class="card-text">Planes personalizados para estudiantes con necesidades educativas especiales.</p>
-                    </div>
-                </div>
+            <div class="col-lg-4 text-center order-1 order-lg-2">
+                <img src="{{ asset('assets/img/login-image.jpg') }}" alt="Acceso a la Plataforma" class="img-fluid rounded shadow-sm">
             </div>
         </section>
-
     </main>
 
-    <footer class="text-center py-3">
-        <p class="mb-0">&copy; 2025 Msc. Marlon Erazo. Todos los derechos reservados.</p>
-    </footer>
+    <!-- Footer -->
+    <footer id="footer" class="footer light-background">
+    <div class="container footer-top">
+        <div class="row gy-4 justify-content-center"> <!-- Centrar los elementos -->
+            <div class="col-lg-4 col-md-6 footer-about text-center"> <!-- Centrar el contenido -->
+                <a href="index.html" class="logo d-flex flex-column align-items-center"> 
+                    <span class="sitename">Msc Marlon Erazo</span>
+                </a>
+                <div class="social-links d-flex justify-content-center mt-4"> 
+                    <a href=""><i class="bi bi-twitter-x"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Alexander Ponce</strong> <span>Todos los derechos reservados</span></p>
+    </div>
+</footer>
+
+
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+    <!-- Main JS File -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+
 </body>
+
 </html>
