@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Model
+class Evaluation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'cedula', 'nombres', 'direccion', 'fecha_nacimiento', 'telefono', 'detalles'
+        'user_id',
+        'cognitive_score',
+        'socioemotional_score',
+        'behavior_score',
+        'academic_score',
+        'family_score',
+        'total_score',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function evaluation()
-{
-    return $this->hasOne(Evaluation::class, 'user_id', 'user_id');
-}
-
 }

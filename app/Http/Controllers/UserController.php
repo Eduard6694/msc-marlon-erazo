@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentPendingAdmin;
+use App\Models\Evaluation;
 
 class UserController extends Controller
 {
@@ -101,4 +102,35 @@ class UserController extends Controller
 
         return redirect()->route('user.dashboard')->with('success', 'Información actualizada con éxito.');
     }
+    public function saveEvaluation(Request $request)
+{
+    $request->validate([
+        'cognitive' => 'required|array',
+        'socioemotional' => 'required|array',
+        'behavior' => 'required|array',
+        'academic' => 'required|array',
+        'family' => 'required|array',
+    ]);
+
+    $cognitiveScore = array_sum($request->input('cognitive'));
+    $socioemotionalScore = array_sum($request->input('socioemotional'));
+    $behaviorScore = array_sum($request->input('behavior'));
+    $academicScore = array_sum($request->input('academic'));
+    $familyScore = array_sum($request->input('family'));
+
+    $totalScore = $cognitiveScore + $socioemotionalScore + $behaviorScore + $academicScore + $familyScore;
+
+    Evaluation::create([
+        'user_id' => auth()->id(),
+        'cognitive_score' => $cognitiveScore,
+        'socioemotional_score' => $socioemotionalScore,
+        'behavior_score' => $behaviorScore,
+        'academic_score' => $academicScore,
+        'family_score' => $familyScore,
+        'total_score' => $totalScore,
+    ]);
+
+    return redirect()->route('user.patient.form')->with('success', '¡Evaluación enviada con éxito! Gracias por tu participación.');
+}
+
 }

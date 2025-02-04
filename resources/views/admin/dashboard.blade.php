@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-    <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Panel de Administrador - Citas
             </h2>
 
             <!-- Botón para acceder al formulario -->
-            <a href="{{ route('admin.list.patients') }}" 
+            <a href="{{ route('admin.list.patients') }}"
                 class="px-4 py-2 bg-blue-600 text-black font-bold rounded-md hover:bg-blue-700 focus:outline-none shadow-md">
                 Verificar Información de Pacientes
             </a>
@@ -66,7 +66,8 @@
         }
 
         .fc-timegrid-slot {
-            height: 50px !important; /* Ajuste de altura de filas */
+            height: 50px !important;
+            /* Ajuste de altura de filas */
         }
     </style>
     @endpush
@@ -76,96 +77,106 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('admin-calendar');
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('admin-calendar');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek', // Vista semanal
-                locale: 'es', // Idioma español
-                timeZone: 'local', // Configura la zona horaria local
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'timeGridWeek,timeGridDay'
-                },
-                slotMinTime: "07:00:00", // Hora mínima (7:00 AM)
-                slotMaxTime: "18:00:00", // Hora máxima (6:00 PM)
-                slotDuration: "01:00:00", // Intervalos de 1 hora
-                selectable: false, // No permitir seleccionar nuevas citas
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek', 
+            locale: 'es', 
+            timeZone: 'local', 
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'timeGridWeek,timeGridDay'
+            },
+            slotMinTime: "07:00:00", 
+            slotMaxTime: "18:00:00", 
+            slotDuration: "01:00:00", 
+            selectable: false, 
 
-                events: "/admin/citas/listar", // Obtener citas desde el backend
+            // 🚀 Nueva configuración para gestionar eventos superpuestos
+            eventOverlap: true, 
+            displayEventEnd: true, 
+            eventMaxStack: 3, 
+            slotEventOverlap: false, 
 
-                eventDidMount: function(info) {
-                    // Estilizar eventos según estado
-                    if (info.event.extendedProps.status === 'pendiente') {
-                        info.el.style.backgroundColor = 'orange';
-                    } else {
-                        info.el.style.backgroundColor = 'green';
-                    }
-                },
+            events: "/admin/citas/listar", 
 
-                eventClick: function(info) {
-                    var event = info.event;
-                    var formattedDate = event.start.toISOString().split('T')[0];
-
-                    var formattedTime = new Date(event.start).toLocaleTimeString('es-EC', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false // Formato de 24 horas
-                    });
-
-                    var confirmAction = confirm(`¿Deseas autorizar la cita para el ${formattedDate} a las ${formattedTime}?`);
-
-                    if (confirmAction) {
-                        fetch(`/admin/citas/autorizar/${event.id}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                                }
-                            }).then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    alert('Cita autorizada correctamente.');
-                                    calendar.refetchEvents(); // Recargar eventos
-                                    updateAppointmentCounts(); // Actualizar el contador de citas
-                                } else {
-                                    alert('Hubo un error: ' + data.message);
-                                }
-                            })
-                            .catch(error => {
-                                alert('Error en la solicitud al servidor.');
-                                console.error(error);
-                            });
-                    }
-                }
-            });
-
-            calendar.render();
-
-            // Función para actualizar el contador de citas
-            function updateAppointmentCounts() {
-                fetch('/admin/citas/listar')
-                    .then(response => response.json())
-                    .then(data => {
-                        let pendingCount = 0;
-                        let approvedCount = 0;
-
-                        data.forEach(event => {
-                            if (event.title === "Pendiente") {
-                                pendingCount++;
-                            } else {
-                                approvedCount++;
-                            }
-                        });
-
-                        document.getElementById("pending-count").textContent = pendingCount;
-                        document.getElementById("approved-count").textContent = approvedCount;
-                    });
+            eventDidMount: function(info) {
+            if (info.event.extendedProps.status === 'pendiente') {
+                info.el.style.backgroundColor = 'orange';
+            } else {
+                info.el.style.backgroundColor = 'green';
             }
 
-            updateAppointmentCounts(); // Llamar a la función al cargar la página
+            // 🚀 Mostrar el nombre del usuario en el evento
+            const userName = info.event.extendedProps.userName || 'Sin Nombre';
+            info.el.querySelector('.fc-event-title').innerHTML = `${userName} - ${info.event.title}`;
+        },
+
+            eventClick: function(info) {
+                var event = info.event;
+                var formattedDate = event.start.toISOString().split('T')[0];
+
+                var formattedTime = new Date(event.start).toLocaleTimeString('es-EC', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false 
+                });
+
+                var confirmAction = confirm(`¿Deseas autorizar la cita para el ${formattedDate} a las ${formattedTime}?`);
+
+                if (confirmAction) {
+                    fetch(`/admin/citas/autorizar/${event.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        }).then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Cita autorizada correctamente.');
+                                calendar.refetchEvents(); 
+                                updateAppointmentCounts(); 
+                            } else {
+                                alert('Hubo un error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            alert('Error en la solicitud al servidor.');
+                            console.error(error);
+                        });
+                }
+            }
         });
-    </script>
+
+        calendar.render();
+
+        // Función para actualizar el contador de citas
+        function updateAppointmentCounts() {
+            fetch('/admin/citas/listar')
+                .then(response => response.json())
+                .then(data => {
+                    let pendingCount = 0;
+                    let approvedCount = 0;
+
+                    data.forEach(event => {
+                        if (event.title === "Pendiente") {
+                            pendingCount++;
+                        } else {
+                            approvedCount++;
+                        }
+                    });
+
+                    document.getElementById("pending-count").textContent = pendingCount;
+                    document.getElementById("approved-count").textContent = approvedCount;
+                });
+        }
+
+        updateAppointmentCounts(); 
+    });
+</script>
+
     @endpush
 </x-app-layout>

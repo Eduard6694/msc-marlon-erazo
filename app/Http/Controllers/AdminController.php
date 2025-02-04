@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Mail\AppointmentApprovedUser;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Patient;
+use App\Models\Evaluation;
 
 
 class AdminController extends Controller
@@ -19,21 +20,24 @@ class AdminController extends Controller
 
     // Listar las citas para el calendario en FullCalendar
     public function listAppointments()
-    {
-        $appointments = Appointment::all();
+{
+    $appointments = Appointment::with('user')->get();
 
-        // Convertir las citas al formato de FullCalendar
-        $events = $appointments->map(function ($appointment) {
-            return [
-                'id' => $appointment->id,
-                'title' => $appointment->status === 'pendiente' ? 'Pendiente' : 'Autorizada',
-                'start' => $appointment->date . 'T' . $appointment->time,
-                'color' => $appointment->status === 'pendiente' ? 'orange' : 'green',
-            ];
-        });
+    $events = $appointments->map(function ($appointment) {
+        return [
+            'id' => $appointment->id,
+            'title' => $appointment->user->name . ' - ' . ucfirst($appointment->status),
+            'start' => $appointment->date . 'T' . $appointment->time,
+            'color' => $appointment->status === 'pendiente' ? 'orange' : 'green', 
+            'status' => $appointment->status, // Asegúrate de enviar el status
+            'userName' => $appointment->user->name
+        ];
+    });
 
-        return response()->json($events);
-    }
+    return response()->json($events);
+}
+
+
 
     // Autorizar una cita y notificar al usuario
     public function authorizeAppointment($id)
@@ -58,7 +62,31 @@ class AdminController extends Controller
     }
     public function listPatients()
     {
-        $patients = Patient::all();
+        $patients = Patient::with('evaluation')->get(); // Carga las evaluaciones relacionadas
         return view('admin.patients', compact('patients'));
+    }
+
+    public function evaluateTest(Request $request)
+    {
+        $request->validate([
+            'attention_difficulties' => 'required|integer|min:0|max:4',
+            'following_instructions' => 'required|integer|min:0|max:4',
+            'social_interaction' => 'required|integer|min:0|max:4',
+            'reading_writing' => 'required|integer|min:0|max:4',
+        ]);
+
+        // Calcular el puntaje total
+        $score = $request->attention_difficulties + $request->following_instructions +
+            $request->social_interaction + $request->reading_writing;
+
+        // Lógica adicional si se necesita guardar el resultado en la base de datos
+
+        return redirect()->back()->with('success', '¡Evaluación enviada con éxito! Puntaje obtenido: ' . $score);
+    }
+
+    public function listEvaluations()
+    {
+        $evaluations = Evaluation::with('user')->get();
+        return view('admin.evaluations', compact('evaluations'));
     }
 }

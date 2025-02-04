@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/user/citas/guardar', [UserController::class, 'store'])->name('user.create.appointment');
         Route::get('/user/patient/form', [UserController::class, 'showPatientForm'])->name('user.patient.form');
         Route::post('/user/patient/save', [UserController::class, 'saveOrUpdatePatient'])->name('user.save.patient');
+        Route::post('/user/evaluation/save', [UserController::class, 'saveEvaluation'])->name('user.save.evaluation');
+
     });
 
     // Rutas de administrador
@@ -42,6 +44,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/citas/listar', [AdminController::class, 'listAppointments'])->name('admin.listAppointments');
         Route::patch('/admin/citas/autorizar/{id}', [AdminController::class, 'authorizeAppointment'])->name('admin.authorize.appointment');
         Route::get('/admin/pacientes', [AdminController::class, 'listPatients'])->name('admin.list.patients');
+        Route::get('/admin/evaluations', [AdminController::class, 'listEvaluations'])->name('admin.evaluations');
+        Route::post('/admin/evaluate-test', [AdminController::class, 'evaluateTest'])->name('admin.evaluateTest');
+
+
 
     });
 });
